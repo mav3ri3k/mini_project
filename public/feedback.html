@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Traffic Rules</title>
+    <link rel="stylesheet" type="text/css" href="./sakura.css">
+	<link rel="icon" type="image/x-icon" href="./im.svg">
+  </head>
+  <body>
+<header>
+
+	  <!--
+		  <nav>
+			  <ul>
+				  <li><a href="./home.html">Home</a></li>
+				  <li><a href="./signs.html">Important Signs</a></li>
+				  <li><a href="./resources.html">Resources</a></li>
+				  <li><a href="./lights.html">Lights Example</a></li>
+				  <li><a href="./quiz.html">Quiz</a></li>
+				  <li><a href="./feedback.html">Feedback</a></li>
+			  </ul>
+		  </nav>
+
+	  --!>
+		  <h1>Feedback Form</h1>
+		  <p>We all need people who will give us feedback</p>
+	  </header>
+
+
+    <main style="display: flex; justify-content: center;">
+		<form id="myForm">
+			<label>Name: </label><input type="text" size="20" id="name"><br>
+			<label>Email: </label><input type="text" size="20" id="email"><br>
+			<label>Phone: </label><input type="text" size="20" id="phone"><br>
+			<label>Date of Birth: </label><input type="date" id="dob"><br>
+			<label>Profile Image: </label><input type="file" id="profileImage"><br>
+			<label>Feedback: </label><textarea cols="40" rows="5" id="feedback"></textarea>
+			<button type="submit">Submit</button><br>
+		</form>
+	</main>
+	<footer>&copy; Traffic Rules Mini-Project</footer>
+	<script>
+		function validateForm() {
+			var name = document.getElementById("name").value;
+			var email = document.getElementById("email").value;
+			var phone = document.getElementById("phone").value;
+			var dob = document.getElementById("dob").value;
+			var feedback = document.getElementById("feedback").value;
+
+			var errorMessage = "";
+
+			// Check name is not empty
+			if (name === "") {
+				errorMessage += "Name is required\n";
+			}
+
+			// Check email format 
+			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+				errorMessage += "Invalid email format\n";
+			}
+
+			if (phone.length !== 10 || isNaN(phone)) {
+				errorMessage += "Phone number must be 10 digits\n";
+			}
+
+			if (!/^\d+$/.test(phone)) {
+				errorMessage += "Phone number should only contain digits\n";
+			}
+
+			// No validation needed for date or file upload
+			if (profileImage) {
+				if (profileImage.size > 4 * 1024 * 1024) {
+					errorMessage += "Profile image cannot be larger than 4MB\n";
+				}
+			}
+
+			// Check feedback is not empty
+			if (feedback === "") {
+				errorMessage += "Feedback is required\n";
+			}
+
+			if (errorMessage !== "") {
+				alert(errorMessage);
+				return false; // Prevent form submission
+			}
+
+			return true; // Allow form submission
+		}
+		function saveFormToCookies() {
+			var name = document.getElementById("name").value;
+			var email = document.getElementById("email").value;
+			var feedback = document.getElementById("feedback").value;
+
+			// Create a cookie string with expiration date (e.g., 1 day)
+			var expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day in milliseconds
+			var cookieString = "name=" + encodeURIComponent(name) + "; expires=" + expiryDate.toUTCString() + "; path=/";
+			cookieString += "; email=" + encodeURIComponent(email) + "; expires=" + expiryDate.toUTCString() + "; path=/";
+			cookieString += "; feedback=" + encodeURIComponent(feedback) + "; expires=" + expiryDate.toUTCString() + "; path=/";
+
+			// Set the cookie
+			document.cookie = cookieString;
+
+			alert("Form data saved to cookies for demonstration");
+		}
+
+		var form = document.getElementById("myForm");
+		form.addEventListener("submit", validateForm);
+		form.addEventListener("submit", saveFormToCookies);
+	</script>
+  </body>
+</html>
